@@ -5,7 +5,7 @@ $(function() {
         schema: {
             title:      { type: 'Select', options: ['Mr', 'Mrs', 'Ms'] },
             name:       'Text',
-            email:      { validators: ['required', 'email'] },
+            email:      'Text',
             birthday:   'Date',
             password:   'Password',
             notes:      { type: 'List', itemType: 'Text' }
@@ -17,16 +17,23 @@ $(function() {
     var form = new Backbone.Form({
         model: user,
         submitButton: "hello"
-    }).render();
+    });
     var FormView = Backbone.View.extend({
       template: form.render(),
       model: user,
+      el: "li",
       initialize: function() {
         this.render();
       },
-
+      test: function() {
+        debugger
+        alert("i got called");
+      },
+      events: {
+          "click :button"                : "test"
+        },
       render: function() {
-        $("body").append(this.template);
+        // this.$el.append(this.template);
       }
 
     });
@@ -35,10 +42,10 @@ $(function() {
     app.form = form;
     $('body').append(form.el);
     // can i move this click event into a backbone view?
-    $(":submit").click(function(e) {
-        e.preventDefault();
-        form.commit();
-    })
+    // $(":submit").click(function(e) {
+    //     e.preventDefault();
+    //     form.commit();
+    // })
 
     var Sample = Backbone.View.extend({
       template: "<h1>hello</h1>",
