@@ -12,23 +12,35 @@ $(function() {
         },
 
     });
-
     var user = new User();
     app.user = user;
     var form = new Backbone.Form({
         model: user,
         submitButton: "hello"
     }).render();
+    var FormView = Backbone.View.extend({
+      template: form.render(),
+      model: user,
+      initialize: function() {
+        this.render();
+      },
+
+      render: function() {
+        $("body").append(this.template);
+      }
+
+    });
+    formview = new FormView();
+
     app.form = form;
     $('body').append(form.el);
+    // can i move this click event into a backbone view?
     $(":submit").click(function(e) {
         e.preventDefault();
         form.commit();
     })
 
     var Sample = Backbone.View.extend({
-
-      className: "document-row",
       template: "<h1>hello</h1>",
       model: user,
       initialize: function() {
