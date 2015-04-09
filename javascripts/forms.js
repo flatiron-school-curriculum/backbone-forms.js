@@ -40,20 +40,23 @@ $(function() {
 
     app.form = form;
     // can i move this click event into a backbone view?
-    // $(":submit").click(function(e) {
-    //     e.preventDefault();
-    //     form.commit();
-    // })
+    $(":submit").click(function(e) {
+        e.preventDefault();
+        form.commit();
+    })
 
     var Sample = Backbone.View.extend({
-      template: "<h1>hello</h1>",
+      template: _.template("<%= number %> fields submitted!"),
       model: user,
       initialize: function() {
         this.listenTo(this.model, "change", this.render);
       },
-
+      numberOfFields: function() {
+        debugger
+        return {"number" :Object.keys(this.model.changedAttributes()).length}
+      },
       render: function() {
-        $("body").append(this.template);
+        $("body").append(this.template(this.numberOfFields()));
       }
 
     });
