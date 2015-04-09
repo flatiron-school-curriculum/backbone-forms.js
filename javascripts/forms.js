@@ -19,20 +19,22 @@ $(function() {
         submitButton: "hello"
     });
     var FormView = Backbone.View.extend({
-      template: form.render(),
+      template: function() {return form.render()},
       model: user,
-      el: "li",
+      el: $("#root"),
       initialize: function() {
         this.render();
       },
-      test: function() {
+      test: function(e) {
+        e.preventDefault()
         debugger
         alert("i got called");
       },
       events: {
-          "click :button"                : "test"
+          "submit"                : "test"
         },
       render: function() {
+        this.$el.append(this.template())
         // this.$el.append(this.template);
       }
 
